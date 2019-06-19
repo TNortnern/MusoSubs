@@ -1,5 +1,14 @@
 <div class="container page-container">
     <?php
+    $firstname = "";
+    $lastname = "";
+    $email = "";
+    if (isset($_SESSION['loggedin'])) {
+        $firstname = $_SESSION['fname'];
+        $lastname = $_SESSION['lname'];
+        $email = $_SESSION['email'];
+        $readonly = "readonly";
+    }
     if (isset($_SESSION['shopcart'])) {
         $count = count($_SESSION['shopcart']);
     }
@@ -21,7 +30,8 @@
 
 
         ?>
-    <cartform total=<?= $total ?>>
+    <cartform <?php if (isset($_SESSION['loggedin'])) { ?> readonly=<?= $readonly ?> <?php } ?>
+        firstname="<?= $firstname ?>" lastname="<?= $lastname ?>" email="<?= $email ?>" total=<?= $total ?>>
         <?php
             foreach ($_SESSION['shopcart'] as $index => $prod) {
                 $product = getProduct($prod['product_id']);

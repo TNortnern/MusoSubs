@@ -13,8 +13,8 @@ function getCategories()
 function getCategory($id)
 {
     global $db;
-    $sql = "SELECT * FROM categories WHERE categoryId = $id";
-    $qry = $sql->query($sql);
+    $sql = "SELECT * FROM categories WHERE categoryId = '$id'";
+    $qry = $db->query($sql);
     $category = $qry->fetch();
     return $category;
 }

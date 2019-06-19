@@ -2,9 +2,12 @@ function disable(item) {
     $(item).text("In cart");
     item.disabled = true;
 }
+
+
+
 //add form
 Vue.component('adminform', {
-    props: ['action', 'type', 'value'],
+    props: ['action', 'type', 'value', 'theid', 'imagelabel', 'required'],
 
     template: `
 <div class="container admin-container">
@@ -14,8 +17,8 @@ Vue.component('adminform', {
         <textarea style="margin:10px 0" placeholder="Enter a description" name="description" class="form-control" rows="5" id="comment" v-bind:value=value required></textarea>
         
         <div class="custom-file" style="margin:10px 0">
-        <input type="file" class="custom-file-input" id="customFile" name="image" required>
-        <label class="custom-file-label" for="customFile">Upload an image</label>
+        <input type="file" class="custom-file-input" v-bind:id=theid name="image" v-bind:required=required>
+        <label class="custom-file-label" for="customFile">{{imagelabel}}</label>
         <div class="invalid-feedback">A product must have an image.</div>
         </div>
 
@@ -36,7 +39,10 @@ Vue.component('adminform', {
 
 // single item order form
 Vue.component('orderform', {
-    props: ['productname', 'productid', 'productprice', 'stock'],
+    props: [
+        'productname', 'productid', 'productprice', 'stock', 'quantity', 'firstname',
+        'lastname', 'email', 'readonly'
+    ],
     template: `
     <div class="container">
     <div class="py-5 text-center">
@@ -55,11 +61,11 @@ Vue.component('orderform', {
                     <div>
                         <h6 class="my-0">{{productname}}</h6>
                         <small class="text-muted">{{this.quantity}}</small>
-                        <i v-on:click="increasequantity(1)" class="fas fa-arrow-circle-up"></i>
-                        <i v-on:click="decreasequantity" class="fas fa-arrow-circle-down"></i>
+                        <i v-on:click="increasequantity(1)" class="fas fa-arrow-circle-up up-arrow"></i>
+                        <i v-on:click="decreasequantity" class="fas fa-arrow-circle-down down-arrow"></i>
                         <span id="stock-message" style="color:red"></span>
                     </div>
-                    <span class="text-muted">{{productprice}}</span>
+                    <span class="text-muted">\${{productprice}}</span>
                 </li>
 
                
@@ -80,36 +86,25 @@ Vue.component('orderform', {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <input v-bind:readonly=readonly v-bind:value=firstname type="text" class="form-control" id="firstName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input v-bind:readonly=readonly v-bind:value=lastname type="text" class="form-control" id="lastName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Valid last name is required.
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="username">Username</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">@</span>
-                        </div>
-                        <input type="text" class="form-control" id="username" placeholder="Username" required>
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Your username is required.
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                    <label for="email">Email <span class="text-muted"></span></label>
+                    <input v-bind:readonly=readonly v-bind:value=email type="email" class="form-control" id="email" placeholder="you@example.com" required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -128,7 +123,7 @@ Vue.component('orderform', {
 
     data() {
         return {
-            quantity: 1
+
         }
     },
     methods: {
@@ -157,7 +152,9 @@ Vue.component('orderform', {
 
 
 Vue.component('cartitems', {
-    props: ['productname', 'productprice', 'productid', 'stock', 'total', 'cartindex', 'quantity'],
+    props: [
+        'productname', 'productprice', 'productid', 'stock', 'total', 'cartindex', 'quantity'
+    ],
     template: `
    
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -215,7 +212,7 @@ Vue.component('cartitems', {
 
 
 Vue.component('cartform', {
-    props: ['total'],
+    props: ['total', 'firstname', 'lastname', 'email', 'readonly'],
     template: `
     <div class="container">
     <div class="py-5 text-center">
@@ -242,36 +239,25 @@ Vue.component('cartform', {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <input v-bind:readonly=readonly v-bind:value=firstname type="text" class="form-control" id="firstName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input v-bind:readonly=readonly v-bind:value=lastname type="text" class="form-control" id="lastName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Valid last name is required.
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="username">Username</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">@</span>
-                        </div>
-                        <input type="text" class="form-control" id="username" placeholder="Username" required>
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Your username is required.
-                        </div>
-                    </div>
-                </div>
+           
 
                 <div class="mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                    <label for="email">Email <span class="text-muted"></span></label>
+                    <input v-bind:readonly=readonly v-bind:value=email type="email" class="form-control" id="email" placeholder="you@example.com" required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -298,7 +284,7 @@ Vue.component('categoryselect', {
     template: `
     <div>
      <label v-bind:for=name>{{type}}</label>
-     <select id="categoryId" v-bind:name=name class="custom-select" @change=this.func>
+     <select id="categoryId" v-bind:name=name class="custom-select" >
         <slot/>
     </select>
     </div>
@@ -307,7 +293,7 @@ Vue.component('categoryselect', {
 
     methods: {
         func: function (event) {
-            this.$root.getNutrients($("#categoryId option:selected").text())
+            // this.$root.getNutrients($("#categoryId option:selected").text())
 
 
         },
@@ -323,6 +309,13 @@ Vue.component('category', {
 
 });
 
+Vue.component('modifycategory', {
+    props: ['name', 'value'],
+    template: `
+        <option v-bind:value=value>{{name}}</option>
+        `
+
+});
 
 
 
@@ -336,12 +329,13 @@ Vue.component('textinput', {
         'value',
         'type',
         'pattern',
-        'id'
+        'id',
+        'val'
     ],
     template: `
     <div class="form-group">
         <label v-bind:for=name>{{label}}</label>
-        <input v-bind:type=type v-bind:pattern=pattern v-bind:value=value type="text" class="form-control" v-bind:id=name v-bind:placeholder=placeholder v-bind:name=name required>
+        <input v-bind:value=val v-bind:type=type v-bind:pattern=pattern type="text" class="form-control" v-bind:id=name v-bind:placeholder=placeholder v-bind:name=name required>
         <div class="valid-feedback"></div>
         <div class="invalid-feedback">{{error}}</div>
     </div>
@@ -379,7 +373,7 @@ Vue.component('carouselitem', {
 
 
 Vue.component('productcard', {
-    props: ['name', 'description', 'price', 'image', 'id', 'categoryid', 'disabled'],
+    props: ['name', 'description', 'price', 'image', 'id', 'categoryid', 'disabled', 'stock'],
     template: `
  <div class="card" v-bind:data-tags=categoryid>
  <div class="overlay d-flex justify-content-center align-items-center">
@@ -388,6 +382,10 @@ Vue.component('productcard', {
     <button name="action" value="view" type="submit" class="btn card-buttons">View</button>
     <button name="action" value="addtocart" type="submit" class="btn card-buttons" v-bind:onmouseover=disabled>Add to Cart</button>
     <button name="action" value="order" type="submit" class="btn card-buttons" v-bind:onmouseover=disabled>Order</button>
+    <div class="form-group center-things">
+  <label class="center-things" style="color:white" for="quantity">Quantity</label>
+  <input name="quantity" style="background-color:#ad172b; color:white; font-size:1.3em" min=1 v-bind:max=stock value="1" type="number" class="form-control center-things" required>
+</div>
     </form>
   </div>
     <img class="card-img-top" v-bind:src=image v-bind:alt=description>
@@ -402,6 +400,51 @@ Vue.component('productcard', {
 `
 })
 
+
+Vue.component('managercard', {
+    props: ['name', 'description', 'price', 'image', 'id', 'categoryid', 'stock'],
+    template: `
+ <div class="card" v-bind:data-tags=categoryid>
+ <div class="overlay d-flex justify-content-center align-items-center">
+    <form style="align-items:center" class="option-form" method="POST" action="index.php">
+    <input name="productId" type="text" v-bind:value=id hidden>
+    <button name="product" value="modify" type="submit" class="btn card-buttons">Modify</button>
+    <button name="product" value="delete" type="submit" class="btn card-buttons">Delete</button>
+    <div class="form-group center-things">
+  <label class="center-things" style="color:white" for="quantity">Stock</label>
+  <input @change=checking($event.target.value,stock) name="quantity" style="background-color:#ad172b; color:white; font-size:1.3em; width:160px" v-bind:value=stock type="number" min=0 class="form-control center-things">
+  <button v-if="this.changed == true" value="save" type="submit" class="btn btn-secondary sav" name="savequantity" autocomplete="off">Save</button>
+</div>
+    </form>
+  </div>
+    <img class="card-img-top" v-bind:src=image v-bind:alt=description>
+    <div class="card-body">
+        <div class="card-title center-things w-100" style="border-bottom:1px black solid"><h5 class="title-font">{{name}}</h5><i>\${{price}}</i></div>
+        <p class="card-text title-font">
+            {{description}}
+        </p>
+    </div>
+
+</div>
+`,
+
+methods:{
+    checking:function(e, stock){
+        console.log(this.changed)
+        if (e > stock || e < stock){
+            this.changed = true;
+        }else{
+            this.changed = false;
+        }
+    }
+},
+
+data(){
+    return{
+        changed: false
+    }
+}
+})
 
 
 
@@ -420,22 +463,22 @@ var app = new Vue({
     },
 
     mounted() {
-        this.getNutrients("cookie")
+        // this.getNutrients("cookie")
     },
     methods: {
-        getNutrients: function (term) {
-            let calories = $('#calories');
-            // The actual fetch request
-            fetch(`https://nutritionix-api.p.rapidapi.com/v1_1/search/${term}?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat`, {
-                    headers: {
-                        "X-RapidAPI-Host": "nutritionix-api.p.rapidapi.com",
-                        "X-RapidAPI-Key": "596c3ec8famsh8a61e9f5a4aeff4p10ba7ajsn546fc49cd52c"
-                    },
-                }).then(response => response.json())
-                .then(data => {
-                    calories.val(Number((Math.random() * data.hits[6].fields.nf_calories) + 1).toFixed(2))
-                })
-        },
+        // getNutrients: function (term) {
+        //     let calories = $('#calories');
+        //     // The actual fetch request
+        //     fetch(`https://nutritionix-api.p.rapidapi.com/v1_1/search/${term}?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat`, {
+        //             headers: {
+        //                 "X-RapidAPI-Host": "nutritionix-api.p.rapidapi.com",
+        //                 "X-RapidAPI-Key": "596c3ec8famsh8a61e9f5a4aeff4p10ba7ajsn546fc49cd52c"
+        //             },
+        //         }).then(response => response.json())
+        //         .then(data => {
+        //             calories.val(Number((Math.random() * data.hits[6].fields.nf_calories) + 1).toFixed(2))
+        //         })
+        // },
         thefun: function (term) {
             console.log(term)
         },

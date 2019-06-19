@@ -5,7 +5,7 @@ if (isset($_POST['Add'])) {
 }
 ?>
 
-<adminform action="Add a Product" type="Add">
+<adminform action="Add a Product" type="Add" imagelabel="Upload an Image" required="required">
     <textinput label="Name of Product" name="name" error="Enter a valid product name"
         placeholder="Enter a product name">
 

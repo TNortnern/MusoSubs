@@ -59,6 +59,20 @@ function addProducts()
     }
 }
 
+function deleteProduct($id){
+    global $db;
+    $sql = "DELETE FROM `products` WHERE `productId` = '$id'";
+    $qry = $db->query($sql);
+
+}
+
+function updateQuantity($id){
+    global $db;
+    $quantity = $_POST['quantity'];
+    $sql = "UPDATE `products` SET `quantity` = '$quantity' WHERE `products`.`productId` = '$id'";
+    $qry = $db->query($sql);
+}
+
 
 function sortBy($id)
 {

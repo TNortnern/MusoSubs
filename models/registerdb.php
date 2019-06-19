@@ -1,6 +1,6 @@
 <?php
 
-function registerUser($email, $password)
+function registerUser($email, $password, $firstname, $lastname)
 {
     global $db;
     // $email = $_POST['email'];
@@ -13,7 +13,7 @@ function registerUser($email, $password)
     } else {
         echo "$email";
         $_SESSION['tempemail'] = $email;
-        $sql = "INSERT INTO users(userId, email, `password`, `admin`) VALUES (NULL, '$email', '$password', 'no')";
+        $sql = "INSERT INTO users(userId, email, firstname, lastname, `password`, `admin`) VALUES (NULL, '$email', '$firstname', '$lastname', '$password', 'no')";
         $qry = $db->query($sql);
         if (!$qry) {
             die("not working");

@@ -15,14 +15,14 @@ if (isset($_SESSION['shopcart']) & !empty($_SESSION['shopcart'])) {
     } else {
         $_SESSION['shopcart'][$count] = array(
             'product_id' => $_POST['productId'],
-            'product_quantity' => 1
+            'product_quantity' => $_POST['quantity']
         );
         header('location: index.php?menu&success');
     }
 } else {
     $_SESSION['shopcart'][0] = array(
         'product_id' => $_POST['productId'],
-        'product_quantity' => 1
+        'product_quantity' => $_POST['quantity']
     );
     header('location: index.php?menu&started');
 }

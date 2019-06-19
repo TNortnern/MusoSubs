@@ -47,6 +47,7 @@ ob_start();
 
                 <a class="nav-item nav-link" href="#Sandwich">About Us</a>
                 <?php if (isset($_SESSION['admin'])) { ?>
+                <a class="nav-item nav-link" href="?manager">Manager</a>
                 <a class="nav-item nav-link" href="?newproduct">Add Product</a>
                 <a class="nav-item nav-link" href="?newcategory">Add Category</a>
                 <?php } ?>
@@ -57,7 +58,7 @@ ob_start();
                         data-target="#login">Login</a>
                     <?php } else {
                     ?>
-                    <a id="logout" href="?logout" style="position:absolute;right:0" class="nav-item nav-link"
+                    <a id="logout" href="index.php?logout" style="position:absolute;right:0" class="nav-item nav-link"
                         data-target="#login">Logout</a>
                     <?php } ?>
                 </div>
@@ -82,12 +83,16 @@ ob_start();
                         <div class="form-group">
                             <label for="email">Email address </label>
                             <input name="email" type="email" class="form-control" id="login-email"
-                                aria-describedby="emailHelp" placeholder="Enter email" required>
+                                aria-describedby="emailHelp" placeholder="Enter email" required value="">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Enter a valid e-mail</div>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input name="password" type="password" class="form-control" id="login-password"
                                 placeholder="Password" required>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Enter a valid password</div>
                         </div>
                         <div class="form-group form-check">
                             <input name="remember" type="checkbox" class="form-check-input" id="remember">
@@ -126,6 +131,16 @@ ob_start();
                             <label for="email">Email address</label>
                             <input name="email" type="email" class="form-control" id="registeremail"
                                 aria-describedby="emailHelp" placeholder="Enter email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <input name="firstname" type="text" class="form-control" id="registerfname"
+                                aria-describedby="fnamehelp" placeholder="Enter First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input name="lastname" type="text" class="form-control" id="registerlname"
+                                aria-describedby="lnamehelp" placeholder="Enter Last Name" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>

@@ -15,11 +15,28 @@ if (isset($_GET['logout'])) {
 }
 
 
-if (isset($_GET['newproduct'])) {
+
+if(isset($_POST['savequantity'])){
+    updateQuantity($_POST['productId']);
+     header("Location:?manager");
+}
+
+if (isset($_GET['manager'])) {
+    include "./views/manager/manager.php";
+}else if(isset($_POST['product'])){
+    if($_POST['product'] == "modify"){
+        include "./views/manager/modifyproduct.php";
+    }else{
+        include "./views/manager/deleteproduct.php";
+    }
+}
+ else if (isset($_GET['newproduct'])) {
     include "./views/manager/add.php";
-} else if (isset($_GET['newcategory']) && isset($_SESSION['admin'])) {
+} else if (isset($_GET['newcategory'])) {
     include "./views/manager/addCategory.php";
-} else if (isset($_GET['menu'])) {
+}
+
+else if (isset($_GET['menu'])) {
     include "./views/products/products.php";
 } else if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -37,4 +54,5 @@ if (isset($_GET['newproduct'])) {
 } else {
     include "./views/landing/landing.php";
 }
+
 include "./views/global/footer.php";

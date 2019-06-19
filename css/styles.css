@@ -5,13 +5,23 @@ footer {
     bottom: 0;
 }
 
-.menu {
-    background-image: url("../images/allinone.jpg");
+.modal {
+    overflow-y: scroll !important
+}
+
+.menu, .manager{
     height: 500px;
     background-size: cover;
+}
+
+.menu {
+    background-image: url("../images/allinone.jpg");
     /* margin-bottom: -50px */
 }
 
+.manager{
+    background-image: url("../images/all.jpg");
+}
 .menu-items img {
     height: 400px
 }
